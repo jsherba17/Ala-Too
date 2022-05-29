@@ -22,4 +22,6 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
+![alt text](https://github.com/jsherba17/Ala-Too/blob/master/penteresto-feature/screenshots/123.png)
+
 
