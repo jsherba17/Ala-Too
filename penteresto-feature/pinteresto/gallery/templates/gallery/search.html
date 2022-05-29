@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="card-columns">
+		{% if search %}
+			{% for a in search %}
+				<div class="card card-pin">
+					<img class="card-img" src="/media/{{ a.image }}" alt="Card image">
+					<div class="overlay">
+						<h2 class="card-title title">{{a.title}}</h2>
+						<div class="more">
+							<a href="{% url 'gallery:detail' a.id %}">
+							<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> More </a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		{% else %}
+			<h1>Нет постов</h1>
+		{% endif %}
+	</div>
+{% endblock %}

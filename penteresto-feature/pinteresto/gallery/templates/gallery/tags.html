@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="card-columns">
+		{% if tags %}
+			<h1 class="mb-5">Теги:</h1>
+			{% for tag in tags %}
+				<p><a href="{% url 'gallery:tags_detail' tag.title %}">{{ tag.title }}</a></p>
+			{% endfor %}
+		{% else %}
+			<h1>Нет постов</h1>
+		{% endif %}
+	</div>
+{% endblock %}

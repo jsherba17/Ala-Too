@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{post.title}} | PintDaniyar{% endblock %}
+
+{% block content %}
+
+<main role="main">
+    <section class="bg-gray200 pt-5 pb-5">
+    <div class="container">
+    	<div class="row justify-content-center">
+    		<div class="col-md-7">
+    			<article class="card">
+    			<img class="card-img-top mb-2" src="/media/{{post.image}}" alt="Card image">
+					<form action="{% url 'gallery:like_post' post.pk %}" method="POST">
+						{% csrf_token %}
+						<button type="submit" class="btn btn-success">Like</button>  <small>Лайков - <b>{{ total_likes }}</b> Просмотры - <b>{{ total_views }}</b></small>
+					</form>
+
+					{% if user == post.author %}
+				<div class="container mb-2">
+					<button class="save btn btn-default"><i class='fa fa-pencil fa-lg'></i><a href="{% url 'gallery:post_edit' pk=post.pk %}"> Редактировать</a></button>
+					<button type="submit" class="save btn btn-default"><i class="fa fa-trash-o fa-lg"></i><a href="{% url 'gallery:post_delete' pk=post.pk %}"> Удалить</a></button>
+				{% endif %}
+				</div>
+    			<div class="card-body">
+    				<ul>
+						<h1 class="card-title display-4">{{ post.title }} </h1>
+					</ul>
+
+    				<ul>
+						<p>{{ post.content }}</p>
+						<br>
+						<hr><b>{{ post.tag }}</b>
+
+						<hr>
+						<em>{{ post.pub_date_post }}hr</em>
+						<em><a href="{% url 'author' username=post.author %}">{{ post.author }}</a></em>
+    				</ul>
+    				<small class="d-block"><a class="btn btn-sm btn-gray200" href="#"><i class="fa fa-external-link"></i> Visit Website</a></small>
+    				<!-- Begin Comments -replace demowebsite with your own id
+                    ================================================== -->
+    				<div id="comments" class="mt-4">
+    					<div id="disqus_thread">
+    					</div>
+    					<script type="text/javascript">
+                            var disqus_shortname = 'demowebsite'; 
+                            var disqus_developer = 0;
+                            (function() {
+                                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                                dsq.src = window.location.protocol + '//' + disqus_shortname + '.disqus.com/embed.js';
+                                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                            })();
+                        </script>
+    					<noscript>
+    					Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+    					</noscript>
+    				</div>
+    				<!--End Comments
+                    ================================================== -->
+    			</div>
+    			</article>
+    		</div>
+    	</div>
+    </div>
+    <div class="container-fluid">
+    	<div class="row">
+					<div class="card-columns">
+						{% if posts_list %}
+							{% for a in posts_list %}
+								<div class="card card-pin">
+									<img class="card-img" src="/media/{{ a.image }}" alt="Card image">
+									<div class="overlay">
+										<h2 class="card-title title">{{a.title}}</h2>
+										<div class="more">
+											<a href="{% url 'gallery:detail' a.id %}">
+											<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i> More </a>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						{% else %}
+							<h1>Нет постов</h1>
+						{% endif %}
+					</div>
+    	</div>
+    </div>
+    </section>
+        
+    </main>
+
+{% endblock content %}
+
+
+    
+
